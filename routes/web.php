@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Public\CatalogController;
 use App\Http\Controllers\Public\DirectionController;
 use App\Http\Controllers\Public\HomeController;
@@ -23,6 +24,15 @@ Route::get('/directions/{slug}', [DirectionController::class, 'show'])->name('di
 
 Route::view('/about', 'public.about')->name('about');
 Route::view('/contacts', 'public.contacts')->name('contacts');
+
+Route::view('/cart', 'cart.index')->name('cart.index');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('/checkout/{order}/pay', [CheckoutController::class, 'pay'])->name('checkout.pay');
+    Route::get('/checkout/{order}/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/{order}/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
+});
 
 Route::get('/dashboard', fn () => view('dashboard'))
     ->middleware(['auth'])
