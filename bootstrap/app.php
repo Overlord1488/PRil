@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [AttachGuestCart::class]);
+        $middleware->validateCsrfTokens(except: ['/webhooks/*']);
         $middleware->alias([
             'role' => EnsureRole::class,
         ]);

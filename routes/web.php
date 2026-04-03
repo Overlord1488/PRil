@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Checkout\CheckoutController;
+use App\Http\Controllers\Checkout\PaymentController;
 use App\Http\Controllers\Public\CatalogController;
 use App\Http\Controllers\Public\DirectionController;
 use App\Http\Controllers\Public\HomeController;
@@ -29,9 +30,11 @@ Route::view('/cart', 'cart.index')->name('cart.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::get('/checkout/{order}/pay', [CheckoutController::class, 'pay'])->name('checkout.pay');
-    Route::get('/checkout/{order}/success', [CheckoutController::class, 'success'])->name('checkout.success');
-    Route::get('/checkout/{order}/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
+    Route::get('/checkout/{order}/pay', [CheckoutController::class, 'pay'])->name('checkout.pay.form');
+
+    Route::get('/checkout/{order}/process', [PaymentController::class, 'pay'])->name('checkout.pay');
+    Route::get('/checkout/{order}/success', [PaymentController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/{order}/failure', [PaymentController::class, 'failure'])->name('checkout.failure');
 });
 
 Route::get('/dashboard', fn () => view('dashboard'))
