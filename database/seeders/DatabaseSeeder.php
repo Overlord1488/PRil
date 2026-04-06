@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             CategoriesSeeder::class,
             DemoProductsSeeder::class,
+            DirectionsSeeder::class,
+            DemoTrainersSeeder::class,
         ]);
     }
 }

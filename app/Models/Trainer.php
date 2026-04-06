@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Trainer extends Model
+{
+    protected $fillable = [
+        'user_id', 'slug', 'display_name', 'photo_path',
+        'bio', 'experience_years', 'rating', 'reviews_count',
+        'is_active', 'sort_order',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'rating' => 'decimal:2',
+            'is_active' => 'boolean',
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function directions(): BelongsToMany
+    {
+        return $this->belongsToMany(TrainingDirection::class, 'direction_trainer', 'trainer_id', 'training_direction_id');
+    }
+
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('is_active', true);
+    }
+}
