@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Trainer extends Model
 {
@@ -31,6 +32,16 @@ class Trainer extends Model
     public function directions(): BelongsToMany
     {
         return $this->belongsToMany(TrainingDirection::class, 'direction_trainer', 'trainer_id', 'training_direction_id');
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(TrainerSchedule::class);
+    }
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
     }
 
     public function scopeActive(Builder $query): void

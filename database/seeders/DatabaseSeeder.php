@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DemoProductsSeeder::class,
             DirectionsSeeder::class,
             DemoTrainersSeeder::class,
+            DemoScheduleSeeder::class,
         ]);
     }
 }

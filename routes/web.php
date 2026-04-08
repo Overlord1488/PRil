@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Checkout\PaymentController;
+use App\Http\Controllers\Public\BookingController;
 use App\Http\Controllers\Public\CatalogController;
 use App\Http\Controllers\Public\DirectionController;
 use App\Http\Controllers\Public\HomeController;
@@ -29,6 +30,10 @@ Route::view('/contacts', 'public.contacts')->name('contacts');
 Route::view('/cart', 'cart.index')->name('cart.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/bookings/trainer/{trainer}', [BookingController::class, 'create'])->name('bookings.create');
+    Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
+
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::get('/checkout/{order}/pay', [CheckoutController::class, 'pay'])->name('checkout.pay.form');
 
