@@ -8,6 +8,7 @@ enum BookingStatus: string
     case Confirmed = 'confirmed';
     case Cancelled = 'cancelled';
     case Completed = 'completed';
+    case NoShow = 'no_show';
 
     public function label(): string
     {
@@ -16,6 +17,7 @@ enum BookingStatus: string
             self::Confirmed => 'Подтверждена',
             self::Cancelled => 'Отменена',
             self::Completed => 'Завершена',
+            self::NoShow => 'Не явился',
         };
     }
 
@@ -26,6 +28,7 @@ enum BookingStatus: string
             self::Confirmed => 'success',
             self::Cancelled => 'danger',
             self::Completed => 'gray',
+            self::NoShow => 'danger',
         };
     }
 
