@@ -26,7 +26,11 @@ class TrainerController extends Controller
     public function show(string $slug): View
     {
         $trainer = Trainer::active()
-            ->with(['directions', 'user'])
+            ->with([
+                'directions',
+                'user',
+                'reviews' => fn ($q) => $q->approved()->with('user')->latest(),
+            ])
             ->where('slug', $slug)
             ->firstOrFail();
 
