@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Trainer;
 use App\Models\TrainerSchedule;
 use App\Models\User;
+use App\Notifications\BookingCreatedNotification;
 use Carbon\Carbon;
 use RuntimeException;
 
@@ -33,7 +34,7 @@ class CreateBookingAction
             ->where('is_active', true)
             ->value('slot_minutes') ?? 60;
 
-        return Booking::create([
+        $booking = Booking::create([
             'user_id' => $user->id,
             'trainer_id' => $trainer->id,
             'training_direction_id' => $directionId,
@@ -43,5 +44,9 @@ class CreateBookingAction
             'notes' => $notes,
             'price' => 0,
         ]);
+
+        $user->notify(new BookingCreatedNotification($booking));
+
+        return $booking;
     }
 }
