@@ -9,63 +9,45 @@ new #[Layout('layouts.guest')] class extends Component
 {
     public LoginForm $form;
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function login(): void
     {
         $this->validate();
-
         $this->form->authenticate();
-
         Session::regenerate();
-
         $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }
 }; ?>
 
-<div>
-    <!-- Session Status -->
+<div class="bg-slate-900 rounded-2xl border border-slate-800 p-8">
+    <h1 class="text-2xl font-bold text-slate-100 mb-2">Вход в аккаунт</h1>
+    <p class="text-sm text-slate-400 mb-8">Нет аккаунта? <a href="{{ route('register') }}" wire:navigate class="text-blue-400 hover:text-blue-300 transition-colors">Зарегистрироваться</a></p>
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form wire:submit="login">
-        <!-- Email Address -->
+    <form wire:submit="login" class="space-y-5">
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="form.email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
+            <x-text-input wire:model="form.email" id="email" type="email" name="email" required autofocus autocomplete="username" placeholder="you@example.com" />
+            <x-input-error :messages="$errors->get('form.email')" class="mt-1.5" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
+        <div>
+            <div class="flex items-center justify-between mb-1.5">
+                <x-input-label for="password" :value="__('Пароль')" class="mb-0" />
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" wire:navigate class="text-xs text-blue-400 hover:text-blue-300 transition-colors">Забыли пароль?</a>
+                @endif
+            </div>
+            <x-text-input wire:model="form.password" id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+            <x-input-error :messages="$errors->get('form.password')" class="mt-1.5" />
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember" class="inline-flex items-center">
-                <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
+        <div class="flex items-center gap-2">
+            <input wire:model="form.remember" id="remember" type="checkbox"
+                   class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-blue-700 focus:ring-blue-700 focus:ring-offset-slate-900">
+            <label for="remember" class="text-sm text-slate-400">Запомнить меня</label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
+        <x-primary-button class="w-full mt-2">Войти</x-primary-button>
     </form>
 </div>
