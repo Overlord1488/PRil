@@ -23,8 +23,15 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center gap-8">
-                        <a href="{{ route('home') }}" class="flex items-center gap-2">
-                            <span class="text-xl font-bold text-white tracking-tight">Gym<span class="text-blue-400">Hub</span></span>
+                        <a href="{{ route('home') }}" class="flex items-center gap-2.5">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="1" y="11" width="5" height="10" rx="2" fill="#60a5fa"/>
+                                <rect x="6" y="13" width="2.5" height="6" rx="1" fill="#60a5fa"/>
+                                <rect x="8.5" y="14.5" width="15" height="3" rx="1.5" fill="#93c5fd"/>
+                                <rect x="23.5" y="13" width="2.5" height="6" rx="1" fill="#60a5fa"/>
+                                <rect x="26" y="11" width="5" height="10" rx="2" fill="#60a5fa"/>
+                            </svg>
+                            <span class="text-base font-bold text-white tracking-tight leading-none">SPORT<span class="text-blue-400"> DIVISION</span></span>
                         </a>
                         <div class="hidden md:flex items-center gap-6">
                             <a href="{{ route('catalog.index') }}" class="text-sm text-slate-300 hover:text-white transition-colors">{{ __('Каталог') }}</a>
@@ -69,7 +76,16 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div>
-                        <span class="text-xl font-bold text-white">Gym<span class="text-blue-400">Hub</span></span>
+                        <div class="flex items-center gap-2">
+                            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="1" y="11" width="5" height="10" rx="2" fill="#60a5fa"/>
+                                <rect x="6" y="13" width="2.5" height="6" rx="1" fill="#60a5fa"/>
+                                <rect x="8.5" y="14.5" width="15" height="3" rx="1.5" fill="#93c5fd"/>
+                                <rect x="23.5" y="13" width="2.5" height="6" rx="1" fill="#60a5fa"/>
+                                <rect x="26" y="11" width="5" height="10" rx="2" fill="#60a5fa"/>
+                            </svg>
+                            <span class="text-base font-bold text-white tracking-tight">SPORT<span class="text-blue-400"> DIVISION</span></span>
+                        </div>
                         <p class="mt-3 text-sm text-slate-400">{{ __('Ваш спортивный зал — программы, тренеры, результаты.') }}</p>
                     </div>
                     <div>

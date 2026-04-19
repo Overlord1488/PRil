@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'О нас — GymHub')
+@section('title', 'О нас — Sport Division')
 
 @section('content')
 
 <section class="bg-zinc-950 py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-extrabold text-slate-100 mb-6">О GymHub</h1>
+        <h1 class="text-4xl font-extrabold text-slate-100 mb-6">О Sport Division</h1>
         <p class="text-lg text-slate-400 leading-relaxed mb-6">
-            GymHub — это онлайн-платформа для поиска тренеров и записи на тренировки.
+            Sport Division — это онлайн-платформа для поиска тренеров и записи на тренировки.
             Мы объединяем профессиональных тренеров и людей, которые хотят улучшить
             своё здоровье и физическую форму.
         </p>

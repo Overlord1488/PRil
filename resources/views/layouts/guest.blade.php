@@ -17,8 +17,15 @@
 
         <nav class="bg-slate-900 border-b border-slate-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
-                <a href="{{ route('home') }}" class="text-xl font-bold text-white tracking-tight">
-                    Gym<span class="text-blue-400">Hub</span>
+                <a href="{{ route('home') }}" class="flex items-center gap-2.5">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="11" width="5" height="10" rx="2" fill="#60a5fa"/>
+                        <rect x="6" y="13" width="2.5" height="6" rx="1" fill="#60a5fa"/>
+                        <rect x="8.5" y="14.5" width="15" height="3" rx="1.5" fill="#93c5fd"/>
+                        <rect x="23.5" y="13" width="2.5" height="6" rx="1" fill="#60a5fa"/>
+                        <rect x="26" y="11" width="5" height="10" rx="2" fill="#60a5fa"/>
+                    </svg>
+                    <span class="text-base font-bold text-white tracking-tight">SPORT<span class="text-blue-400"> DIVISION</span></span>
                 </a>
             </div>
         </nav>

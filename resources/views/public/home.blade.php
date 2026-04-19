@@ -1,31 +1,36 @@
 @extends('layouts.app')
 
-@section('title', 'GymHub — Ваш спортивный зал')
+@section('title', 'Sport Division — Ваш спортивный зал')
 
 @section('content')
 
 {{-- Hero --}}
-<section class="relative bg-zinc-950 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-950/40 via-zinc-950 to-zinc-950 pointer-events-none"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
+<section class="relative bg-zinc-950 overflow-hidden min-h-[85vh] flex items-center">
+    <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1637430308606-86576d8fef3c?w=1600&fit=crop&q=80"
+             alt="" class="w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-zinc-950/40"></div>
+    </div>
+    <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div class="max-w-2xl">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-100 leading-tight">
+            <p class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-4">Спортивный клуб</p>
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white leading-[1.05]">
                 Достигайте<br>
                 <span class="text-blue-400">новых высот</span>
             </h1>
-            <p class="mt-6 text-lg text-slate-400 leading-relaxed max-w-xl">
+            <p class="mt-6 text-lg text-slate-300 leading-relaxed max-w-xl">
                 Профессиональные тренеры, продуманные программы и онлайн-запись — всё для вашего результата в одном месте.
             </p>
-            <div class="mt-8 flex flex-wrap gap-4">
+            <div class="mt-10 flex flex-wrap gap-4">
                 <a href="{{ route('trainers.index') }}"
-                   class="inline-flex items-center gap-2 px-7 py-3.5 bg-blue-900 hover:bg-blue-800 text-slate-100 rounded-xl font-semibold transition-colors text-sm">
+                   class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-colors text-sm">
                     Найти тренера
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
                 <a href="{{ route('catalog.index') }}"
-                   class="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-xl font-semibold transition-colors text-sm">
+                   class="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold transition-colors text-sm backdrop-blur-sm">
                     В каталог
                 </a>
             </div>
@@ -71,18 +76,18 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             @foreach($directions as $dir)
             <a href="{{ route('directions.show', $dir->slug) }}"
-               class="group bg-slate-900 rounded-2xl p-5 text-center hover:ring-1 hover:ring-blue-900 transition-all">
-                @if($dir->icon)
-                <div class="text-3xl mb-3">{{ $dir->icon }}</div>
+               class="group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+                @if($dir->cover_path)
+                <img src="{{ $dir->cover_path }}" alt="{{ $dir->name }}"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                 @else
-                <div class="w-10 h-10 mx-auto mb-3 bg-blue-900/30 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                </div>
+                <div class="w-full h-full bg-slate-800"></div>
                 @endif
-                <p class="text-sm font-medium text-slate-100 group-hover:text-blue-400 transition-colors">{{ $dir->name }}</p>
-                <p class="text-xs text-slate-500 mt-1">{{ $dir->trainers_count }} тр.</p>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-3">
+                    <p class="text-sm font-semibold text-white leading-tight">{{ $dir->name }}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ $dir->trainers_count }} тр.</p>
+                </div>
             </a>
             @endforeach
         </div>
@@ -103,18 +108,24 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
             @foreach($trainers as $trainer)
-            <div class="bg-slate-900 rounded-2xl overflow-hidden hover:ring-1 hover:ring-blue-900 transition-all">
-                <a href="{{ route('trainers.show', $trainer->slug) }}">
+            <div class="bg-slate-900 rounded-2xl overflow-hidden hover:ring-1 hover:ring-blue-800 transition-all group">
+                <a href="{{ route('trainers.show', $trainer->slug) }}" class="block relative overflow-hidden">
                     @if($trainer->photo_path)
                     <img src="{{ Storage::url($trainer->photo_path) }}"
                          alt="{{ $trainer->display_name }}"
-                         class="w-full h-56 object-cover object-top">
+                         class="w-full h-64 object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     @else
-                    <div class="w-full h-56 bg-zinc-800 flex items-center justify-center">
-                        <svg class="w-16 h-16 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
+                    <div class="relative w-full h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1540205453279-389ebbc43b5b?w=600&fit=crop&q=80"
+                             alt="{{ $trainer->display_name }}"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-blue-950/50"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
                     </div>
                     @endif
                 </a>
@@ -148,12 +159,17 @@
 @endif
 
 {{-- CTA --}}
-<section class="bg-blue-950/40 border-t border-blue-900/30 py-16">
-    <div class="max-w-3xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold text-slate-100 mb-4">Готовы начать?</h2>
-        <p class="text-slate-400 mb-8">Запишитесь на тренировку онлайн — займёт меньше минуты.</p>
+<section class="relative overflow-hidden py-20">
+    <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=1400&fit=crop&q=80"
+             alt="" class="w-full h-full object-cover opacity-20">
+        <div class="absolute inset-0 bg-blue-950/60"></div>
+    </div>
+    <div class="relative max-w-3xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Готовы начать?</h2>
+        <p class="text-slate-300 mb-8">Запишитесь на тренировку онлайн — займёт меньше минуты.</p>
         <a href="{{ route('trainers.index') }}"
-           class="inline-flex items-center gap-2 px-8 py-4 bg-blue-900 hover:bg-blue-800 text-slate-100 rounded-xl font-semibold transition-colors">
+           class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-colors">
             Выбрать тренера
         </a>
     </div>
