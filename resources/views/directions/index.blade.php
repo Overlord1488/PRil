@@ -11,41 +11,24 @@
             <p class="mt-2 text-slate-400">Выберите то, что подходит именно вам</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             @forelse($directions as $direction)
             <a href="{{ route('directions.show', $direction->slug) }}"
-               class="group bg-slate-900 rounded-2xl p-6 hover:ring-1 hover:ring-blue-900 transition-all flex flex-col gap-4">
-
-                @if($direction->icon)
-                <div class="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-400 text-2xl">
-                    {{ $direction->icon }}
-                </div>
+               class="group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+                @if($direction->cover_url)
+                <img src="{{ $direction->cover_url }}" alt="{{ $direction->name }}"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                 @else
-                <div class="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                </div>
+                <div class="w-full h-full bg-gradient-to-br from-blue-950 to-slate-900"></div>
                 @endif
-
-                <div>
-                    <h2 class="text-lg font-semibold text-slate-100 group-hover:text-blue-400 transition-colors">
-                        {{ $direction->name }}
-                    </h2>
-                    @if($direction->description)
-                    <p class="mt-1 text-sm text-slate-400 line-clamp-2">{{ $direction->description }}</p>
-                    @endif
-                </div>
-
-                <div class="mt-auto flex items-center justify-between">
-                    <span class="text-xs text-slate-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                <div class="absolute top-3 right-3 text-2xl">{{ $direction->icon }}</div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <p class="font-semibold text-white text-sm leading-tight">{{ $direction->name }}</p>
+                    <p class="text-xs text-slate-400 mt-1">
                         {{ $direction->trainers_count }}
                         {{ $direction->trainers_count === 1 ? 'тренер' : ($direction->trainers_count < 5 ? 'тренера' : 'тренеров') }}
-                    </span>
-                    <svg class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
+                    </p>
                 </div>
             </a>
             @empty

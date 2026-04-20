@@ -17,16 +17,17 @@
         <div class="bg-slate-900 rounded-2xl overflow-hidden">
             <div class="md:flex">
                 <div class="md:w-80 flex-shrink-0">
-                    @if($trainer->photo_path)
-                    <img src="{{ Storage::url($trainer->photo_path) }}"
+                    @if($trainer->photo_url)
+                    <img src="{{ $trainer->photo_url }}"
                          alt="{{ $trainer->display_name }}"
                          class="w-full h-80 md:h-full object-cover object-top">
                     @else
-                    <div class="w-full h-80 md:h-full bg-zinc-800 flex items-center justify-center">
-                        <svg class="w-28 h-28 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
+                    <div class="w-full h-80 md:h-full min-h-64 bg-gradient-to-br from-blue-950 to-slate-800 flex flex-col items-center justify-center gap-3">
+                        <div class="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center">
+                            <span class="text-3xl font-bold text-slate-300">
+                                {{ mb_strtoupper(mb_substr($trainer->display_name, 0, 1)) }}{{ mb_strtoupper(mb_substr(strrchr($trainer->display_name, ' ') ?: ' ', 1, 1)) }}
+                            </span>
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -69,7 +70,7 @@
                     @endif
 
                     @if($trainer->bio)
-                    <div class="mt-6 text-slate-300 leading-relaxed prose prose-invert prose-sm max-w-none">
+                    <div class="mt-6 text-slate-300 leading-relaxed text-sm">
                         {!! nl2br(e($trainer->bio)) !!}
                     </div>
                     @endif
@@ -90,10 +91,9 @@
                 </div>
             </div>
         </div>
-        {{-- Reviews section --}}
-        <div class="mt-8">
 
-            {{-- Approved reviews --}}
+        {{-- Reviews --}}
+        <div class="mt-8">
             @if($trainer->reviews->isNotEmpty())
             <h2 class="text-xl font-semibold text-slate-100 mb-5">
                 Отзывы
@@ -122,7 +122,6 @@
             </div>
             @endif
 
-            {{-- Leave a review --}}
             <div class="bg-slate-900 rounded-xl px-6 py-6">
                 <h3 class="text-base font-semibold text-slate-100 mb-4">Оставить отзыв</h3>
                 <livewire:review.review-form

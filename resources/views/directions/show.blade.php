@@ -3,7 +3,30 @@
 @section('title', $direction->name)
 
 @section('content')
-<div class="bg-zinc-950 min-h-screen py-12">
+
+{{-- Hero --}}
+<section class="relative h-56 sm:h-72 overflow-hidden">
+    @if($direction->cover_url)
+    <img src="{{ $direction->cover_url }}" alt="{{ $direction->name }}"
+         class="w-full h-full object-cover">
+    @else
+    <div class="w-full h-full bg-gradient-to-br from-blue-950 to-slate-900"></div>
+    @endif
+    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div class="flex items-center gap-3">
+            <span class="text-4xl">{{ $direction->icon }}</span>
+            <div>
+                <h1 class="text-3xl font-bold text-white">{{ $direction->name }}</h1>
+                @if($direction->description)
+                <p class="mt-1 text-slate-300 text-sm max-w-2xl">{{ $direction->description }}</p>
+                @endif
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="bg-zinc-950 min-h-screen py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <a href="{{ route('directions.index') }}"
@@ -14,77 +37,14 @@
             Все направления
         </a>
 
-        <div class="mb-10 flex items-start gap-5">
-            @if($direction->icon)
-            <div class="w-16 h-16 bg-blue-900/30 rounded-2xl flex items-center justify-center text-blue-400 text-3xl flex-shrink-0">
-                {{ $direction->icon }}
-            </div>
-            @endif
-            <div>
-                <h1 class="text-3xl font-bold text-slate-100">{{ $direction->name }}</h1>
-                @if($direction->description)
-                <p class="mt-2 text-slate-400 max-w-2xl">{{ $direction->description }}</p>
-                @endif
-            </div>
-        </div>
-
         @if($direction->trainers->isNotEmpty())
         <h2 class="text-xl font-semibold text-slate-100 mb-6">
             Тренеры по этому направлению
+            <span class="text-slate-500 font-normal text-base ml-1">({{ $direction->trainers->count() }})</span>
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($direction->trainers as $trainer)
-            <div class="bg-slate-900 rounded-2xl overflow-hidden hover:ring-1 hover:ring-blue-900 transition-all">
-                <a href="{{ route('trainers.show', $trainer->slug) }}">
-                    @if($trainer->photo_path)
-                    <img src="{{ Storage::url($trainer->photo_path) }}"
-                         alt="{{ $trainer->display_name }}"
-                         class="w-full h-56 object-cover object-top">
-                    @else
-                    <div class="w-full h-56 bg-zinc-800 flex items-center justify-center">
-                        <svg class="w-16 h-16 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                    </div>
-                    @endif
-                </a>
-                <div class="p-5">
-                    <a href="{{ route('trainers.show', $trainer->slug) }}"
-                       class="text-lg font-semibold text-slate-100 hover:text-blue-400 transition-colors">
-                        {{ $trainer->display_name }}
-                    </a>
-
-                    @if($trainer->directions->isNotEmpty())
-                    <div class="flex flex-wrap gap-1 mt-2">
-                        @foreach($trainer->directions as $dir)
-                        <span class="px-2 py-0.5 bg-blue-900/40 text-blue-400 rounded text-xs">
-                            {{ $dir->name }}
-                        </span>
-                        @endforeach
-                    </div>
-                    @endif
-
-                    <div class="flex items-center gap-4 mt-3 text-sm text-slate-400">
-                        @if($trainer->experience_years)
-                        <span>{{ $trainer->experience_years }} лет опыта</span>
-                        @endif
-                        @if($trainer->rating)
-                        <span class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                            {{ number_format($trainer->rating, 1) }}
-                        </span>
-                        @endif
-                    </div>
-
-                    <a href="{{ route('trainers.show', $trainer->slug) }}"
-                       class="mt-4 inline-block w-full text-center py-2 bg-blue-900 hover:bg-blue-800 text-slate-100 rounded-lg text-sm font-medium transition-colors">
-                        Подробнее
-                    </a>
-                </div>
-            </div>
+            @include('trainers._card', ['trainer' => $trainer])
             @endforeach
         </div>
         @else

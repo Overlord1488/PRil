@@ -22,9 +22,10 @@ class DemoTrainersSeeder extends Seeder
         $trainers = [
             [
                 'name' => 'Алексей Петров',
-                'email' => 'aleksey@gymhub.local',
+                'email' => 'aleksey@sportdivision.local',
                 'slug' => 'aleksey-petrov',
                 'display_name' => 'Алексей Петров',
+                'photo_path' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&fit=crop&q=80',
                 'bio' => 'Мастер спорта по тяжёлой атлетике. Специализируется на силовых тренировках и наборе мышечной массы. Работает с атлетами всех уровней — от новичков до спортсменов.',
                 'experience_years' => 8,
                 'rating' => 4.9,
@@ -32,9 +33,10 @@ class DemoTrainersSeeder extends Seeder
             ],
             [
                 'name' => 'Мария Соколова',
-                'email' => 'maria@gymhub.local',
+                'email' => 'maria@sportdivision.local',
                 'slug' => 'maria-sokolova',
                 'display_name' => 'Мария Соколова',
+                'photo_path' => 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&fit=crop&q=80',
                 'bio' => 'Сертифицированный инструктор по йоге и стретчингу. Помогает снять стресс, улучшить гибкость и обрести гармонию. Проводит групповые и индивидуальные занятия.',
                 'experience_years' => 6,
                 'rating' => 4.8,
@@ -42,9 +44,10 @@ class DemoTrainersSeeder extends Seeder
             ],
             [
                 'name' => 'Дмитрий Волков',
-                'email' => 'dmitry@gymhub.local',
+                'email' => 'dmitry@sportdivision.local',
                 'slug' => 'dmitry-volkov',
                 'display_name' => 'Дмитрий Волков',
+                'photo_path' => 'https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=600&fit=crop&q=80',
                 'bio' => 'Тренер по CrossFit и функциональному тренингу. КМС по боксу. Любит нестандартные подходы и высокую интенсивность. Гарантирует результат при регулярных тренировках.',
                 'experience_years' => 5,
                 'rating' => 4.7,
@@ -54,12 +57,15 @@ class DemoTrainersSeeder extends Seeder
 
         foreach ($trainers as $data) {
             $directions = $data['directions'];
-            unset($data['directions']);
+            unset($data['directions'], $data['name']);
+
+            $email = $data['email'];
+            unset($data['email']);
 
             $user = User::firstOrCreate(
-                ['email' => $data['email']],
+                ['email' => $email],
                 [
-                    'name' => $data['name'],
+                    'name' => $data['display_name'],
                     'password' => Hash::make('Trainer12345!'),
                     'email_verified_at' => now(),
                 ]
@@ -67,19 +73,17 @@ class DemoTrainersSeeder extends Seeder
 
             $user->assignRole('trainer');
 
-            $trainer = Trainer::create([
-                'user_id' => $user->id,
-                'slug' => $data['slug'],
-                'display_name' => $data['display_name'],
-                'bio' => $data['bio'],
-                'experience_years' => $data['experience_years'],
-                'rating' => $data['rating'],
-                'reviews_count' => rand(5, 30),
-                'is_active' => true,
-                'sort_order' => 0,
-            ]);
+            $trainer = Trainer::updateOrCreate(
+                ['slug' => $data['slug']],
+                array_merge($data, [
+                    'user_id' => $user->id,
+                    'reviews_count' => rand(5, 30),
+                    'is_active' => true,
+                    'sort_order' => 0,
+                ])
+            );
 
-            $trainer->directions()->attach(
+            $trainer->directions()->sync(
                 collect($directions)->filter()->pluck('id')
             );
         }
