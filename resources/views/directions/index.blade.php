@@ -14,7 +14,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             @forelse($directions as $direction)
             <a href="{{ route('directions.show', $direction->slug) }}"
-               class="group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+               class="group relative overflow-hidden rounded-2xl block h-64">
                 @if($direction->cover_url)
                 <img src="{{ $direction->cover_url }}" alt="{{ $direction->name }}"
                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">

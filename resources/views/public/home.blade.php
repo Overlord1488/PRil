@@ -76,7 +76,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             @foreach($directions as $dir)
             <a href="{{ route('directions.show', $dir->slug) }}"
-               class="group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+               class="group relative overflow-hidden rounded-2xl block h-52">
                 @if($dir->cover_path)
                 <img src="{{ $dir->cover_path }}" alt="{{ $dir->name }}"
                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">

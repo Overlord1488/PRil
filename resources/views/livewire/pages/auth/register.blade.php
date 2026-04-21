@@ -29,7 +29,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        $this->redirect(route('account.index', absolute: false), navigate: true);
     }
 }; ?>
 
@@ -53,12 +53,13 @@ new #[Layout('layouts.guest')] class extends Component
         <div>
             <x-input-label for="password" :value="__('Пароль')" />
             <x-text-input wire:model="password" id="password" type="password" name="password" required autocomplete="new-password" placeholder="Минимум 8 символов" />
-            <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
+            <p class="mt-1.5 text-xs text-slate-500">Минимум 8 символов, используйте буквы и цифры</p>
+            <x-input-error :messages="$errors->get('password')" class="mt-1" />
         </div>
 
         <div>
             <x-input-label for="password_confirmation" :value="__('Повторите пароль')" />
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••" />
+            <x-text-input wire:model="password_confirmation" id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Повторите пароль" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
         </div>
 
