@@ -26,7 +26,7 @@ class OrderPaidNotification extends Notification
             ->line(__('Ваш заказ').' **'.$this->order->number.'** '.__('успешно оплачен.'))
             ->line(__('Сумма').': '.number_format((float) $this->order->total, 0, '.', ' ').' ₽')
             ->action(__('Перейти к заказу'), route('account.orders.show', $this->order))
-            ->line(__('Спасибо за покупку в GymHub!'));
+            ->line(__('Спасибо за покупку в Sport Division!'));
     }
 
     public function toArray(object $notifiable): array
