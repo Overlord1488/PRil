@@ -17,6 +17,7 @@ class CartSidebar extends Component
         $this->open = ! $this->open;
     }
 
+    #[On('add-to-cart')]
     public function add(int $productId, int $qty = 1): void
     {
         $product = Product::find($productId);

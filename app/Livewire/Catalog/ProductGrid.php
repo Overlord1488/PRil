@@ -54,6 +54,15 @@ class ProductGrid extends Component
         $this->resetPage();
     }
 
+    public function resetFilters(): void
+    {
+        $this->type = '';
+        $this->category = '';
+        $this->priceMin = 0;
+        $this->priceMax = 0;
+        $this->resetPage();
+    }
+
     public function render(): View
     {
         $query = Product::query()->published()->with(['category', 'images']);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -64,6 +65,14 @@ class Product extends Model
     public function scopeInCategory(Builder $query, int $categoryId): void
     {
         $query->where('category_id', $categoryId);
+    }
+
+    public function getCoverUrlAttribute(): ?string
+    {
+        if (!$this->cover_path) return null;
+        return str_starts_with($this->cover_path, 'http')
+            ? $this->cover_path
+            : Storage::url($this->cover_path);
     }
 
     public function isDigital(): bool

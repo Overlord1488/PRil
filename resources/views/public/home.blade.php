@@ -14,7 +14,7 @@
     <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div class="max-w-2xl">
             <p class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-4">Спортивный клуб</p>
-            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white leading-[1.05]">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05]">
                 Достигайте<br>
                 <span class="text-blue-400">новых высот</span>
             </h1>

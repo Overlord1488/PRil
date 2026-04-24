@@ -7,14 +7,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="mb-10">
-            <h1 class="text-3xl font-bold text-slate-100">Направления тренировок</h1>
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-100">Направления тренировок</h1>
             <p class="mt-2 text-slate-400">Выберите то, что подходит именно вам</p>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             @forelse($directions as $direction)
             <a href="{{ route('directions.show', $direction->slug) }}"
-               class="group relative overflow-hidden rounded-2xl block h-64">
+               class="group relative overflow-hidden rounded-2xl block h-44 sm:h-56 lg:h-64">
                 @if($direction->cover_url)
                 <img src="{{ $direction->cover_url }}" alt="{{ $direction->name }}"
                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
