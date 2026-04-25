@@ -3,7 +3,7 @@
 @section('title', $product->name)
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
     <nav class="text-sm text-slate-400 mb-6">
         <a href="{{ route('catalog.index') }}" class="hover:text-white">{{ __('Каталог') }}</a>
         @if($product->category)
@@ -14,16 +14,24 @@
         <span class="text-slate-300">{{ $product->name }}</span>
     </nav>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
         {{-- Gallery --}}
         <div>
-            @if($product->cover_path)
+            @if($product->cover_url)
                 <div class="aspect-video bg-slate-900 rounded-xl overflow-hidden mb-4">
-                    <img src="{{ asset('storage/'.$product->cover_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                    <img src="{{ $product->cover_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                 </div>
             @else
                 <div class="aspect-video bg-slate-900 rounded-xl flex items-center justify-center mb-4">
-                    <span class="text-6xl text-slate-700">@if($product->isDigital()) 📄 @else 📦 @endif</span>
+                    @if($product->isDigital())
+                    <svg class="w-16 h-16 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    @else
+                    <svg class="w-16 h-16 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                    @endif
                 </div>
             @endif
             @if($product->images->isNotEmpty())
@@ -54,7 +62,9 @@
                 <p class="text-sm text-red-400 mb-4">{{ __('Нет в наличии') }}</p>
             @endif
 
-            <button type="button" class="w-full sm:w-auto px-8 py-3 bg-blue-900 hover:bg-blue-800 text-white font-medium rounded-lg transition-colors">
+            <button type="button"
+                    onclick="Livewire.dispatch('add-to-cart', { productId: {{ $product->id }} })"
+                    class="w-full sm:w-auto px-8 py-3 bg-blue-900 hover:bg-blue-800 text-white font-semibold rounded-xl transition-colors">
                 {{ __('Добавить в корзину') }}
             </button>
         </div>

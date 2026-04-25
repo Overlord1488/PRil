@@ -1,7 +1,7 @@
 <x-app-layout>
 <div class="bg-zinc-950 min-h-screen py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex gap-8">
+        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
             @include('account._sidebar')
 
             <main class="flex-1 min-w-0">
@@ -13,7 +13,7 @@
                 </div>
                 @endif
 
-                <div class="bg-slate-900 rounded-2xl p-8 max-w-lg">
+                <div class="bg-slate-900 rounded-2xl p-5 sm:p-8 max-w-lg">
                     <form action="{{ route('account.profile.update') }}" method="POST" class="space-y-5">
                         @csrf
                         @method('PATCH')

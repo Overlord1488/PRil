@@ -3,19 +3,26 @@
         {{-- Form fields --}}
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-slate-900 rounded-xl p-6">
-                <h3 class="text-base font-semibold text-white mb-4">{{ __('Контактные данные') }}</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-white">{{ __('Контактные данные') }}</h3>
+                    <span class="text-xs text-slate-500">* — обязательные поля</span>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm text-slate-300 mb-1">{{ __('Имя') }} *</label>
-                        <input wire:model="name" type="text"
-                               class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-blue-500 @error('name') border-red-500 @enderror">
-                        @error('name') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                        <label class="block text-sm text-slate-300 mb-1.5">{{ __('Имя') }} <span class="text-red-400">*</span></label>
+                        <input wire:model="name" type="text" placeholder="Иван Иванов"
+                               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-colors @error('name') border-red-500 @enderror">
+                        @error('name') <p class="text-xs text-red-400 mt-1.5">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-300 mb-1">{{ __('Телефон') }} *</label>
-                        <input wire:model="phone" type="tel"
-                               class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-blue-500 @error('phone') border-red-500 @enderror">
-                        @error('phone') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                        <label class="block text-sm text-slate-300 mb-1.5">{{ __('Телефон') }} <span class="text-red-400">*</span></label>
+                        <input wire:model="phone" type="tel" placeholder="+7 (999) 000-00-00"
+                               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-colors @error('phone') border-red-500 @enderror">
+                        @error('phone')
+                            <p class="text-xs text-red-400 mt-1.5">{{ $message }}</p>
+                        @else
+                            <p class="text-xs text-slate-600 mt-1.5">Формат: +7 (999) 000-00-00</p>
+                        @enderror
                     </div>
                 </div>
             </div>

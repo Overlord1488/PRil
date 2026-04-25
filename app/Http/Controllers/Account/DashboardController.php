@@ -6,13 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Download;
 use App\Models\Order;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(): View|RedirectResponse
     {
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('filament.admin.pages.dashboard');
+        }
+
+        if (Auth::user()->hasRole('trainer')) {
+            return redirect()->route('trainer.index');
+        }
+
         $userId = Auth::id();
 
         $recentOrders = Order::forUser($userId)

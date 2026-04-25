@@ -1,5 +1,5 @@
 <div class="bg-slate-900 rounded-2xl overflow-hidden hover:ring-1 hover:ring-blue-800 transition-all group">
-    <a href="{{ route('trainers.show', $trainer->slug) }}" class="block relative overflow-hidden h-64">
+    <a href="{{ route('trainers.show', $trainer->slug) }}" class="block relative overflow-hidden h-48 sm:h-56 lg:h-64">
         @if($trainer->photo_url)
         <img src="{{ $trainer->photo_url }}" alt="{{ $trainer->display_name }}"
              class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">

@@ -20,9 +20,9 @@
                     @if($trainer->photo_url)
                     <img src="{{ $trainer->photo_url }}"
                          alt="{{ $trainer->display_name }}"
-                         class="w-full h-80 md:h-full object-cover object-top">
+                         class="w-full h-56 sm:h-72 md:h-full object-cover object-top">
                     @else
-                    <div class="w-full h-80 md:h-full min-h-64 bg-gradient-to-br from-blue-950 to-slate-800 flex flex-col items-center justify-center gap-3">
+                    <div class="w-full h-56 sm:h-72 md:h-full min-h-48 bg-gradient-to-br from-blue-950 to-slate-800 flex flex-col items-center justify-center gap-3">
                         <div class="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center">
                             <span class="text-3xl font-bold text-slate-300">
                                 {{ mb_strtoupper(mb_substr($trainer->display_name, 0, 1)) }}{{ mb_strtoupper(mb_substr(strrchr($trainer->display_name, ' ') ?: ' ', 1, 1)) }}
@@ -77,10 +77,20 @@
 
                     <div class="mt-8">
                         @auth
-                        <a href="{{ route('bookings.create', ['trainer' => $trainer->slug]) }}"
-                           class="inline-block px-8 py-3 bg-blue-900 hover:bg-blue-800 text-slate-100 rounded-xl font-semibold transition-colors">
-                            Записаться на тренировку
-                        </a>
+                            @if(auth()->user()->id === $trainer->user_id)
+                            <span class="inline-block px-8 py-3 bg-slate-800 text-slate-500 rounded-xl font-semibold cursor-default">
+                                Это ваш профиль
+                            </span>
+                            @elseif(auth()->user()->hasRole('trainer'))
+                            <span class="inline-block px-8 py-3 bg-slate-800 text-slate-500 rounded-xl font-semibold cursor-default">
+                                Тренеры не записываются к тренерам
+                            </span>
+                            @else
+                            <a href="{{ route('bookings.create', ['trainer' => $trainer->slug]) }}"
+                               class="inline-block px-8 py-3 bg-blue-900 hover:bg-blue-800 text-slate-100 rounded-xl font-semibold transition-colors">
+                                Записаться на тренировку
+                            </a>
+                            @endif
                         @else
                         <a href="{{ route('login') }}"
                            class="inline-block px-8 py-3 bg-blue-900 hover:bg-blue-800 text-slate-100 rounded-xl font-semibold transition-colors">

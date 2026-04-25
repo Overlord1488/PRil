@@ -1,10 +1,28 @@
 <x-app-layout>
 <div class="bg-zinc-950 min-h-screen py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex gap-8">
+        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
             @include('account._sidebar')
 
             <main class="flex-1 min-w-0">
+                @if(session('success'))
+                <div class="mb-6 flex items-center gap-3 px-5 py-4 bg-green-900/30 border border-green-700/40 rounded-xl text-sm text-green-300">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{ session('success') }}
+                </div>
+                @endif
+
+                @if(session('error'))
+                <div class="mb-6 flex items-center gap-3 px-5 py-4 bg-red-900/30 border border-red-700/40 rounded-xl text-sm text-red-300">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{ session('error') }}
+                </div>
+                @endif
+
                 <div class="flex items-center gap-3 mb-6">
                     <a href="{{ route('account.orders.index') }}"
                        class="text-slate-400 hover:text-slate-100 transition-colors text-sm">← Все заказы</a>
@@ -68,6 +86,22 @@
                         </div>
                     </div>
                 </div>
+
+                @if($order->status === \App\Enums\OrderStatus::PendingPayment)
+                <div class="bg-slate-900 rounded-2xl px-6 py-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <p class="text-slate-100 font-semibold">Заказ ожидает оплаты</p>
+                        <p class="text-sm text-slate-400 mt-0.5">Оплатите заказ, чтобы мы начали его обработку.</p>
+                    </div>
+                    <a href="{{ route('checkout.pay', $order) }}"
+                       class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                        </svg>
+                        Оплатить заказ
+                    </a>
+                </div>
+                @endif
 
                 @if($order->has_digital)
                 <div class="bg-blue-900/20 border border-blue-800/40 rounded-xl px-5 py-4 text-sm text-blue-300">

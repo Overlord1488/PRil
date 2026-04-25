@@ -17,8 +17,8 @@
         <div class="bg-slate-900 rounded-2xl p-8">
             {{-- Trainer header --}}
             <div class="flex items-center gap-4 mb-8 pb-8 border-b border-slate-800">
-                @if($trainer->photo_path)
-                <img src="{{ Storage::url($trainer->photo_path) }}"
+                @if($trainer->photo_url)
+                <img src="{{ $trainer->photo_url }}"
                      alt="{{ $trainer->display_name }}"
                      class="w-16 h-16 rounded-full object-cover object-top flex-shrink-0">
                 @else

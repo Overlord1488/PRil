@@ -1,7 +1,7 @@
 <x-app-layout>
 <div class="bg-zinc-950 min-h-screen py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex gap-8">
+        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
             @include('account._sidebar')
 
             <main class="flex-1 min-w-0">
@@ -88,8 +88,10 @@
                 @if($recentOrders->isEmpty() && $upcomingBookings->isEmpty())
                 <div class="bg-slate-900 rounded-2xl p-12 text-center text-slate-500">
                     Здесь пока ничего нет. Начните с&nbsp;
-                    <a href="{{ route('trainers.index') }}" class="text-blue-400 hover:underline">выбора тренера</a>
-                    &nbsp;или&nbsp;
+                    @if(!auth()->user()->hasRole('trainer'))
+                        <a href="{{ route('trainers.index') }}" class="text-blue-400 hover:underline">выбора тренера</a>
+                        &nbsp;или&nbsp;
+                    @endif
                     <a href="{{ route('catalog.index') }}" class="text-blue-400 hover:underline">каталога</a>.
                 </div>
                 @endif
