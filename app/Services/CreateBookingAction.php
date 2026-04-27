@@ -25,6 +25,14 @@ class CreateBookingAction
         $available = $this->slots->generate($trainer, $scheduledAt->copy()->startOfDay());
         $timeStr = $scheduledAt->format('H:i');
 
+        if ($user->hasRole('trainer')) {
+            throw new RuntimeException('Тренеры не могут записываться на тренировки');
+        }
+
+        if ($trainer->user_id === $user->id) {
+            throw new RuntimeException('Нельзя записаться к самому себе');
+        }
+
         if ($available->firstWhere('time', $timeStr) === null) {
             throw new RuntimeException('Выбранный слот недоступен');
         }

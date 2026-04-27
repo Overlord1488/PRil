@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Booking;
+use App\Models\Order;
 use App\Models\Trainer;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -12,6 +13,8 @@ class StatsOverviewWidget extends BaseWidget
 {
     protected function getStats(): array
     {
+        $revenue = Order::where('status', '!=', 'cancelled')->sum('total');
+
         return [
             Stat::make('Пользователи', User::count())
                 ->description('Всего зарегистрировано')
@@ -21,12 +24,12 @@ class StatsOverviewWidget extends BaseWidget
                 ->description('Активных тренеров')
                 ->color('success'),
 
-            Stat::make('Бронирования', Booking::count())
-                ->description('Всего записей')
+            Stat::make('Заказы', Order::count())
+                ->description('Оплачено: '.Order::where('status', 'paid')->count())
                 ->color('warning'),
 
-            Stat::make('Бронирования сегодня', Booking::whereDate('scheduled_at', today())->count())
-                ->description('Запланировано на сегодня')
+            Stat::make('Выручка', number_format($revenue, 0, '.', ' ').' ₽')
+                ->description('Без отменённых заказов')
                 ->color('info'),
         ];
     }
